@@ -126,94 +126,9 @@
 <script src="~/adminLte/bower/datatables.net/js/jquery.dataTables.js"></script>
 <script src="~/adminLte/bower/datatables.net-bs/js/dataTables.bootstrap.js"></script>
 <script src="~/adminLte/bower/datatables-responsive/js/dataTables.responsive.min.js"></script>
-
-<script>
-        $(document).ready(function () {
-            $("#Letters").DataTable({
-                responsive: true,
-                processing: true,
-                serverSide: true,
-                language: { "info": "Showing _START_ to _END_ of _TOTAL_ entries" },
-                filter: false,
-     
-
-                ajax: {
-                    url: "/api/Letters",
-                    dataSrc: "data"
-      
-
-
-
-                },
-                columns: [
-                    {
-                        data: "Id",
-                        name: "Id",
-                        autoWidth: true
-
-                    },
-                    {
-                        data: "Title",
-                        name: "Title",
-                        autoWidth: true
-
-                    },
-                    {
-                        data: "Summary",
-                        name: "Summary",
-                        autoWidth: true
-
-                    },
-                    {
-                        data: "LetterType.Name",
-                        name: "LetterType",
-                        autoWidth: true
-
-
-
-                    },
-                    {
-                        data: "Sender.Name",
-                        name: "Sender",
-                        autoWidth: true
-                    
-
-                    },
-                    {
-                        data: "GetDateCreated",
-                        name: "DateCreated",
-                        autoWidth: true
-
-                    },
-                    {
-
-                        data: "GetEntryDate",
-                        name: "EntryDate",
-                        autoWidth: true
-
-                    }
-                ]
-                
-
-            });
-    });
-    $(function () {
-        var lettertypeSelect = $("#LetterType-Select");
-        $.ajax({
-            type: "GET",
-            url: "api/Lettertypes",
-            success: function (letterTypes) {
-                $.each(letterTypes, function (i,letterType) { 
-                    lettertypeSelect.append('<option>' + letterType.Name + '</option>')
-                })
-
-            }
-
-        });
-    });
-
-
-</script>
+<script src="~/customJS/Letters-Datatable.js"></script>
+<script src="~/customJS/LetterTypes-Select.js"></script>
+<script src="~/customJS/Senders-Select.js"></script>
 
 }
 

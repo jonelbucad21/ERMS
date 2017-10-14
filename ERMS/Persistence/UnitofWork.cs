@@ -15,6 +15,7 @@ namespace ERMS.Persistence
         public IDivisionRepository Divisions { get; set; }
         public ILetterRepository Letters { get; set; }
         public ILetterTypeRepository LetterTypes { get; set; }
+        public ISenderRepository Senders { get; set; }
 
         public UnitofWork(ApplicationDbContext context)
         {
@@ -23,6 +24,7 @@ namespace ERMS.Persistence
             Divisions = new DivisionRepository(_context);
             Letters = new LetterRepository(_context);
             LetterTypes = new LetterTypeRepository(_context);
+            Senders = new SenderRepository(_context);
    
         }
 

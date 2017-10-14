@@ -11,6 +11,7 @@ namespace ERMS.Persistence
         IDivisionRepository Divisions { get;  }
         ILetterRepository Letters { get; }
         ILetterTypeRepository LetterTypes { get;  }
+        ISenderRepository Senders { get; }
 
 
 
