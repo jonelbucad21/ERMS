@@ -11,17 +11,18 @@ namespace ERMS.Persistence
     {
         private readonly ApplicationDbContext _context;
 
-        public IDepartmentRepository Department { get; set; }
-        public IDivisionRepository Division { get; set; }
-        public ILetterRepository Letter { get; set; }
+        public IDepartmentRepository Departments { get; set; }
+        public IDivisionRepository Divisions { get; set; }
+        public ILetterRepository Letters { get; set; }
+        public ILetterTypeRepository LetterTypes { get; set; }
 
         public UnitofWork(ApplicationDbContext context)
         {
             _context = context;
-      //      _context = new ApplicationDbContext(new DbContextOptions<ApplicationDbContext>());
-            Department = new DepartmentRepository(_context);
-            Division = new DivisionRepository(_context);
-            Letter = new LetterRepository(_context);
+            Departments = new DepartmentRepository(_context);
+            Divisions = new DivisionRepository(_context);
+            Letters = new LetterRepository(_context);
+            LetterTypes = new LetterTypeRepository(_context);
    
         }
 

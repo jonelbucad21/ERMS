@@ -16,19 +16,19 @@ namespace ERMS.Controllers.api
     [Route("api/Letters")]
     public class LettersController : Controller
     {
-        private readonly IUnitofWork unitofWork;
+        private readonly IUnitofWork unitOfWork;
         private readonly IMapper mapper;
 
-        public LettersController(IUnitofWork unitofWork, IMapper mapper)
+        public LettersController(IUnitofWork unitOfWork, IMapper mapper)
         {
-            this.unitofWork = unitofWork;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
 
         [HttpGet("{skip:int}/{pageSize:int}")]
         public async Task<IActionResult> GetLetters(int skip,int pageSize)
         {       
-            var letters = await unitofWork.Letter.GetAll();
+            var letters = await unitOfWork.Letters.GetAll();
             return  Ok(mapper.Map<IEnumerable<Letter>,IEnumerable<LetterDto>>(letters));   
         }
 
@@ -58,11 +58,11 @@ namespace ERMS.Controllers.api
                     var prop = getProperty(columName);
                     if (sortDirection == "asc")
                     {
-                        letters = await unitofWork.Letter.GetAll();
+                        letters = await unitOfWork.Letters.GetAll();
                     }
                     else
                     {
-                        letters = await unitofWork.Letter.GetAll();
+                        letters = await unitOfWork.Letters.GetAll();
                     }
 
 

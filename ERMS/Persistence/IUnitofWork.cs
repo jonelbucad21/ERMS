@@ -7,9 +7,10 @@ namespace ERMS.Persistence
 {
     public interface IUnitofWork
     {
-        IDepartmentRepository Department { get; }
-        IDivisionRepository Division { get;  }
-        ILetterRepository Letter { get; }
+        IDepartmentRepository Departments { get; }
+        IDivisionRepository Divisions { get;  }
+        ILetterRepository Letters { get; }
+        ILetterTypeRepository LetterTypes { get;  }
 
 
 
