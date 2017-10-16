@@ -36,6 +36,7 @@ namespace ERMS.Controllers.api
                 sEcho = 3,
                 iTotalRecords = totalRecords,
                 iTotalDisplayRecords = letters.Count(),
+                pages = 5,
                 aadata = mapper.Map<IEnumerable<Letter>, IEnumerable<LetterDto>>(letters)
             };
             

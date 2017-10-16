@@ -12,7 +12,7 @@
             "infoEmpty": "No records available",
             "infoFiltered": "(filtered from _MAX_ total records)" },
         filter: false,
-        paging: false,
+        lengthChange: false,
         ajax: {
             url: "/api/Letters/1/10",
             dataSrc: "aadata"
