@@ -36,7 +36,7 @@ namespace ERMS.Persistence.Repositories
             return await _context.Letters
                 .Include(p => p.LetterType)
                 .Include(p => p.Sender)
-                .Where(predicate)
+                
                 .Skip(pageSize * (pageIndex - 1))
                 .Take(pageSize)
                 .ToListAsync(); 
@@ -59,6 +59,14 @@ namespace ERMS.Persistence.Repositories
                 .Include(p => p.LetterType)
                 .Include(p => p.Sender)
                 .SingleOrDefaultAsync(predicate);
+        }
+
+        public Letter Single(Expression<Func<Letter, bool>> predicate)
+        {
+            return _context.Letters
+                .Include(p => p.LetterType)
+                .Include(p => p.Sender)
+                .SingleOrDefault(predicate);
         }
 
         public ApplicationDbContext _context

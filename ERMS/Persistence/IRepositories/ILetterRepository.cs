@@ -15,5 +15,6 @@ namespace ERMS.Persistence.IRepositories
         Task<int> GetCount(Expression<Func<Letter, bool>> predicate);
         Task<Letter> Find(int id);
         Task<Letter> SingleOrDefault(Expression<Func<Letter, bool>> predicate);
+        Letter Single(Expression<Func<Letter, bool>> predicate);
     }
 }

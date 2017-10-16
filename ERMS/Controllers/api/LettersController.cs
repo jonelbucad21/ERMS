@@ -27,20 +27,28 @@ namespace ERMS.Controllers.api
 
         [HttpGet("{skip:int}/{pageSize:int}")]
         public async Task<IActionResult> GetLetters(int skip,int pageSize)
-        {       
-            var letters = await unitOfWork.Letters.GetAll();
-            return  Ok(mapper.Map<IEnumerable<Letter>,IEnumerable<LetterDto>>(letters));   
+        {
+            var letters = await unitOfWork.Letters.GetAll(skip, pageSize, null);
+            var totalRecords = await unitOfWork.Letters.GetCount();
+            var responsedate = new
+            {
+                
+                sEcho = 3,
+                iTotalRecords = totalRecords,
+                iTotalDisplayRecords = letters.Count(),
+                aadata = mapper.Map<IEnumerable<Letter>, IEnumerable<LetterDto>>(letters)
+            };
+            
+            return  Ok(responsedate);   
         }
 
-
-        [HttpGet("")]
+        [HttpGet("Data")]
         public async Task<IActionResult> GetLetters()
         {
             IEnumerable<Letter> letters = new List<Letter>();
-
+          
             var requestFormData = HttpContext.Request;
-
-            var skip = Convert.ToInt32(requestFormData.Query["start"].ToString());
+            var skip = Convert.ToInt32(requestFormData.Query["start"].ToString());  
             var pageSize = Convert.ToInt32(requestFormData.Query["length"].ToString());
             Microsoft.Extensions.Primitives.StringValues tempOrder = new[] { "" };
 
@@ -64,11 +72,10 @@ namespace ERMS.Controllers.api
                     {
                         letters = await unitOfWork.Letters.GetAll();
                     }
-
-
                 }
             }
-                var results = mapper.Map<IEnumerable<Letter>, IEnumerable<LetterDto>>(letters);
+
+            var results = mapper.Map<IEnumerable<Letter>, IEnumerable<LetterDto>>(letters);
 
             dynamic response = new
                 {
@@ -81,7 +88,6 @@ namespace ERMS.Controllers.api
 
            return Ok(response);
         }
-
 
         private PropertyInfo getProperty(string name)
         {
@@ -96,6 +102,62 @@ namespace ERMS.Controllers.api
                 }
             }
             return prop;
+        }
+        
+        [HttpGet]
+        public IActionResult GetLetter(int id)
+        {
+            var letter = unitOfWork.Letters.SingleOrDefault(c => c.Id == id);
+            if (letter == null)
+                return NotFound();
+
+            return Ok(mapper.Map<Task<Letter>,Task<LetterDto>>(letter));
+        }
+        
+        [HttpPost]
+        public  IActionResult CreateLetter(Letter letter)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            unitOfWork.Letters.Add(letter);
+            unitOfWork.Commit();
+
+            return Created(new Uri("api/letters/" + letter.Id), letter);
+        }   
+        
+        [HttpPut]
+        public IActionResult UpdateLetter(int id, Letter letter)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var letterinDb = unitOfWork.Letters.SingleOrDefault(p => p.Id == id);
+
+            if (letterinDb == null)
+                return NotFound();
+
+            mapper.Map(letter, letterinDb);
+
+            unitOfWork.Commit();
+
+            return Ok();
+
+        }
+        
+        [HttpDelete]
+        public IActionResult DeleteLetter(int id)
+        {
+            var letterinDb = unitOfWork.Letters.Single(p => p.Id == id);
+
+            if (letterinDb == null)
+                return NotFound();
+
+            unitOfWork.Letters.Remove(letterinDb);
+            unitOfWork.Commit();
+
+           return Ok();
+
         }
         
     }
