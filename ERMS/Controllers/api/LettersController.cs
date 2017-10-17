@@ -24,7 +24,7 @@ namespace ERMS.Controllers.api
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
-
+        
         [HttpGet("{skip:int}/{pageSize:int}")]
         public async Task<IActionResult> GetLetters(int skip,int pageSize)
         {
@@ -34,9 +34,12 @@ namespace ERMS.Controllers.api
             {
                 
                 sEcho = 3,
-                iTotalRecords = totalRecords,
-                iTotalDisplayRecords = letters.Count(),
-                pages = 5,
+                TotalRecords = totalRecords,
+                TotalDisplayRecords = letters.Count(),
+                page = 1,
+                pages = 20,
+                length = 5,
+                serverSide = true,
                 aadata = mapper.Map<IEnumerable<Letter>, IEnumerable<LetterDto>>(letters)
             };
             
@@ -52,7 +55,7 @@ namespace ERMS.Controllers.api
             var skip = Convert.ToInt32(requestFormData.Query["start"].ToString());  
             var pageSize = Convert.ToInt32(requestFormData.Query["length"].ToString());
             Microsoft.Extensions.Primitives.StringValues tempOrder = new[] { "" };
-
+            
             if (Request.Query.TryGetValue("order[0][column]", out tempOrder))
             {
                 var columnIndex = requestFormData.Query["order[0][column]"].ToString();

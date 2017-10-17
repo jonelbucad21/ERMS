@@ -1,18 +1,21 @@
 ﻿$(document).ready(function () {
     
     $("#Letters").DataTable({
-        
+     //   serverSide: true,
         responsive: true,
         processing: true,
-        serverSide: true,
         language: { // "info": "Showing _START_ to _END_ of _TOTAL_ entries"
             "lengthMenu": "Display _MENU_ records per page",
             "zeroRecords": "Nothing found - sorry",
             "info": "Showing page _PAGE_ of _PAGES_ from _MAX_ total records",
             "infoEmpty": "No records available",
-            "infoFiltered": "(filtered from _MAX_ total records)" },
+            "infoFiltered": "(filtered from _MAX_ total records)"
+        },
+  
+       
         filter: false,
-        lengthChange: false,
+        paginate: false,
+        info: false,
         ajax: {
             url: "/api/Letters/1/10",
             dataSrc: "aadata"
